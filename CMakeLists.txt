@@ -7,5 +7,9 @@ include(GeneralOptions)
 
 add_subdirectory(utils)
 
-add_executable(task_master
+add_executable(${PROJECT_NAME}
         main.cpp)
+
+target_link_libraries(${PROJECT_NAME}
+        PUBLIC
+            utils)

@@ -15,10 +15,11 @@ add_library(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME}
         PUBLIC
-            ${PROJECT_SOURCE_DIR})
+            ${PROJECT_SOURCE_DIR}
+            ${PROJECT_SOURCE_DIR}/parser)
 
 target_link_libraries(${PROJECT_NAME}
-        PRIVATE
+        PUBLIC
             yaml-cpp)
 
 #target_link_directories(${PROJECT_NAME}
