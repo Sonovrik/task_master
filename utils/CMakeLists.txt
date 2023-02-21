@@ -3,5 +3,5 @@ project(utils)
 
 include(GeneralOptions)
 
-
+add_subdirectory(parser)
 
