@@ -7,7 +7,7 @@ ConfigParser::ConfigParser(std::string_view path_to_config) {
 }
 
 void ConfigParser::loadConfig(std::string_view path_to_config) {
-	m_RootNode = YAML::Load(path_to_config.data());
+	m_RootNode = YAML::LoadFile(path_to_config.data());
 
 }
 
