@@ -28,10 +28,16 @@ public:
 class FileStrategy : public ILoggerStrategy
 {
 private:
+    std::filesystem::path m_LogsDir;
+    std::filesystem::path m_FileName;
 
-
+    const std::size_t m_MaxFileSize;
+    std::size_t m_CurrentFileSize;
 
 public:
+    FileStrategy() = delete;
+    FileStrategy(std::string_view logs_dir, std::size_t max_log_size);
+
     void write(std::stringstream& stream) override;
 };
 
