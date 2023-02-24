@@ -47,7 +47,7 @@ void FileStrategy::write(std::stringstream &ss)
 
     if (message.size() > m_MaxFileSize)
     {
-        // cannot write. Message size too big
+        std::cerr << "Error message size: too big" << std::endl;
         return;
     }
 

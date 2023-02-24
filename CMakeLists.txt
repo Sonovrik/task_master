@@ -12,6 +12,8 @@ endif()
 
 add_executable(${PROJECT_NAME}
         logging/Logger.cpp
+        logging/Strategy.cpp
+        logging/helpers.cpp
         main.cpp)
 
 target_include_directories(${PROJECT_NAME}
