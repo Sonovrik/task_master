@@ -1,9 +1,12 @@
 #pragma once
 
+#include "Strategy.h"
+#include "helpers.h"
+
+
 #include <filesystem>
 #include <map>
 #include <memory>
-
 namespace logging
 {
 
@@ -17,23 +20,11 @@ enum class LoggerType
 class Logger {
 
 private:
-    std::filesystem::path m_LogsDir;
-
-private:
-    Logger(std::string_view path_to_logs);
-
-
+    std::unique_ptr<ILoggerStrategy> m_LogStrategy;
 
 public:
-    Logger() = delete;
-    static Logger getLogger();
+    Logger(LoggerType loggerType, std::string_view logs_dir, std::size_t max_log_size = GB(1));
 
-public:
-    template<typename... TArgs>
-    void info(TArgs&&... args) const
-    {
-
-    }
 };
 
 }

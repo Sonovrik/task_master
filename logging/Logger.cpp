@@ -3,15 +3,19 @@
 namespace logging
 {
 
-Logger::Logger(std::string_view path_to_logs)
-    : m_LogsDir(path_to_logs)
-{}
-
-Logger Logger::getLogger() {
-    static const std::string logs_dir = "./";
-    static Logger logger(logs_dir);
-
-    return logger;
+Logger::Logger(LoggerType loggerType, std::string_view logs_dir, std::size_t max_log_size)
+{
+    switch (loggerType) {
+        case LoggerType::DISABLED:
+            m_LogStrategy = std::make_unique<DisabledStrategy>();
+            break;
+        case LoggerType::STDOUT:
+            m_LogStrategy = std::make_unique<StdOutStrategy>();
+            break;
+        case LoggerType::FILE:
+            m_LogStrategy = std::make_unique<FileStrategy>(logs_dir, max_log_size);
+            break;
+    }
 }
 
 }
