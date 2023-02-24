@@ -22,7 +22,6 @@ private:
 private:
     Logger(std::string_view path_to_logs);
 
-    std::string getCurrentTimeAsString();
 
 
 public:
