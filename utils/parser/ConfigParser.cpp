@@ -1,18 +1,20 @@
 #include "ConfigParser.h"
 
-#include <iostream>
+namespace Parsing
+{
 
-ConfigParser::ConfigParser(std::string_view path_to_config) {
+ConfigParser::ConfigParser(std::string_view path_to_config)
+{
 	loadConfig(path_to_config);
 }
 
-void ConfigParser::loadConfig(std::string_view path_to_config) {
+void ConfigParser::loadConfig(std::string_view path_to_config)
+{
 	m_RootNode = YAML::LoadFile(path_to_config.data());
-
 }
 
-TaskInfo ConfigParser::getTask(const YAML::Node& node) {
-	TaskInfo task;
+utils::TaskInfo ConfigParser::getTask(const YAML::Node& node) {
+	utils::TaskInfo task;
 
 	task.cmd 			= node["cmd"].as<std::string>();
 	task.num_procs 		= node["numprocs"].as<int>();
@@ -33,9 +35,9 @@ TaskInfo ConfigParser::getTask(const YAML::Node& node) {
 	return task;
 }
 
-std::unordered_map<std::string, TaskInfo> ConfigParser::getTasks()
+std::unordered_map<std::string, utils::TaskInfo> ConfigParser::getTasks()
 {
-	std::unordered_map<std::string, TaskInfo> tasks;
+	std::unordered_map<std::string, utils::TaskInfo> tasks;
 
 	auto programsRoot = m_RootNode["programs"];
 	for (auto it = programsRoot.begin(); it != programsRoot.end(); ++it) {
@@ -45,7 +47,7 @@ std::unordered_map<std::string, TaskInfo> ConfigParser::getTasks()
 	return tasks;
 }
 
-SIGNAL ConfigParser::parseSignal(const std::string& signal)
+utils::SIGNAL ConfigParser::parseSignal(const std::string& signal)
 {
 	auto res = m_signalsMap.find(signal);
 	if (res == m_signalsMap.end())
@@ -54,4 +56,6 @@ SIGNAL ConfigParser::parseSignal(const std::string& signal)
 	}
 
 	return res->second;
+}
+
 }

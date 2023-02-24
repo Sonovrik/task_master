@@ -4,16 +4,22 @@
 
 #include "utils.h"
 
+#include <string>
+#include <vector>
 #include <map>
+#include <unordered_map>
+
+namespace Parsing
+{
 
 class ConfigParser
 {
 private:
 	YAML::Node m_RootNode;
 
-	inline const static std::map<std::string, SIGNAL> m_signalsMap {
-			{"TERM", SIGNAL::TERM},
-			{"USR1", SIGNAL::USR1},
+	inline const static std::map<std::string, utils::SIGNAL> m_signalsMap {
+			{"TERM", utils::SIGNAL::TERM},
+			{"USR1", utils::SIGNAL::USR1},
 	};
 
 private:
@@ -23,7 +29,8 @@ private:
 		std::vector<T> res;
 		for (auto it = node.begin(); it != node.end(); ++it)
 		{
-			if (it->Type() != YAML::NodeType::Scalar) {
+			if (it->Type() != YAML::NodeType::Scalar)
+			{
 				throw std::runtime_error("Node is not scalar type");
 			}
 			res.push_back(it->as<T>());
@@ -45,9 +52,9 @@ private:
 	}
 
 private:
-	TaskInfo getTask(const YAML::Node& node);
+	utils::TaskInfo getTask(const YAML::Node& node);
 
-	SIGNAL parseSignal(const std::string& signal);
+	static utils::SIGNAL parseSignal(const std::string& signal);
 
 public:
 	ConfigParser() = default;
@@ -57,5 +64,7 @@ public:
 
 	void loadConfig(std::string_view path_to_config);
 
-	std::unordered_map<std::string, TaskInfo> getTasks();
+	std::unordered_map<std::string, utils::TaskInfo> getTasks();
 };
+
+}

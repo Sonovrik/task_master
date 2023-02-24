@@ -4,7 +4,7 @@
 
 int main(int argc, char** argv)
 {
-	ConfigParser cf("../config.yaml");
+	Parsing::ConfigParser cf("../config.yaml");
 	auto tmp = cf.getTasks();
 	std::cout << "Hello world" << std::endl;
 

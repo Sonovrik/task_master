@@ -4,12 +4,17 @@
 #include <vector>
 #include <unordered_map>
 
-enum class SIGNAL : int {
+namespace utils
+{
+
+enum class SIGNAL : int
+{
 	TERM,
 	USR1
 };
 
-struct TaskInfo {
+struct TaskInfo
+{
 	std::string cmd;
 	int num_procs;
 	int umask;
@@ -27,3 +32,4 @@ struct TaskInfo {
 	std::unordered_map<std::string, std::string> env;
 };
 
+}
