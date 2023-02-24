@@ -18,10 +18,11 @@ enum class LoggerType
     FILE
 };
 
-class Logger {
+class Logger
+{
 
 private:
-    std::unique_ptr<ILoggerStrategy> m_LogStrategy;
+    std::shared_ptr<ILoggerStrategy> m_LogStrategy;
 
 private:
     template<typename... TArgs>
@@ -43,7 +44,11 @@ private:
     }
 
 public:
-    Logger(LoggerType loggerType, std::string_view logs_dir, std::size_t max_log_size = GB(1));
+    Logger() = delete;
+    Logger& operator=(const Logger& other) = delete;
+    Logger(const Logger& other) = delete;
+
+    Logger(LoggerType loggerType, std::string_view logs_dir = "", std::size_t max_log_size = GB(1));
 
     template<typename... TArgs>
     void info(TArgs&&... args) const

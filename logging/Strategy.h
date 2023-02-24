@@ -24,6 +24,7 @@ class StdOutStrategy : public ILoggerStrategy
 {
 public:
     void write(std::stringstream& stream) override;
+
 };
 
 class FileStrategy : public ILoggerStrategy
