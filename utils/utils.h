@@ -4,6 +4,11 @@
 #include <vector>
 #include <unordered_map>
 
+enum class SIGNAL : int {
+	TERM,
+	USR1
+};
+
 struct TaskInfo {
 	std::string cmd;
 	int num_procs;
@@ -14,10 +19,11 @@ struct TaskInfo {
 	std::vector<int> exit_codes;
 	std::size_t start_retries;
 	std::size_t start_time;
-	std::vector<int> stop_signals;
+	SIGNAL stop_signal;
 	std::size_t stop_time;
 
 	std::string stdout_file;
 	std::string stderr_file;
 	std::unordered_map<std::string, std::string> env;
 };
+
