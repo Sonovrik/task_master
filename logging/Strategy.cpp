@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "helpers.h"
+
 namespace logging
 {
 
@@ -24,14 +26,19 @@ FileStrategy::FileStrategy(std::string_view logs_dir, std::size_t max_log_size)
 
 bool FileStrategy::openFile()
 {
-    stati
-    if (m_File.is_open() && std::filesystem::exists(m_FilePath))
+    if (!m_File.is_open() || !std::filesystem::exists(m_FilePath))
     {
-        return true;
+        m_File.close();
+        m_FilePath = m_LogsDir.string() + "/" + getCurrentTimeAsString();
+        m_File.open(m_FilePath, std::ios_base::out | std::ios_base::app);
+        if (!m_File.is_open())
+        {
+            return false;
+        }
+        m_CurrentFileSize = 0;
     }
 
-    m_File.close();
-    m_FilePath = m_LogsDir.string() + "/" +
+    return true;
 }
 
 void FileStrategy::write(std::stringstream &ss)
@@ -46,8 +53,20 @@ void FileStrategy::write(std::stringstream &ss)
 
     if (message.size() + m_CurrentFileSize > m_MaxFileSize)
     {
+        // create new file
 
+        m_File.close();
+        if (!openFile())
+        {
+            // do something
+            std::cerr << "Error while creating log file" << std::endl;
+            return;
+        }
     }
+
+    m_File << message;
+    m_File.flush();
+    m_CurrentFileSize += message.size();
 }
 
 }

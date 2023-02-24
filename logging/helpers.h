@@ -2,4 +2,9 @@
 
 #include <string>
 
+namespace logging
+{
+
 std::string getCurrentTimeAsString();
+
+}

@@ -3,6 +3,9 @@
 #include <sstream>
 #include <chrono>
 
+namespace logging
+{
+
 std::string getCurrentTimeAsString()
 {
     std::stringstream ss;
@@ -11,4 +14,6 @@ std::string getCurrentTimeAsString()
 
     ss << std::put_time(std::localtime(&in_time), "%Y-%m-%d_%X");
     return ss.str();
+}
+
 }
